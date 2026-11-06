@@ -1,23 +1,30 @@
 import connection.ConnectionFactory;
+import dao.CategoriaDao;
+import model.Categoria;
+
 import java.sql.Connection;
+import java.util.List;
 
 public class Main {
 
     public static void main(String[] args) {
+        /*Categoria categoria = new Categoria();
 
-        try {
+        categoria.setNome("Eletrônicos");
+        categoria.setDescricao("Resíduos eletrônicos");
 
-            Connection conn = ConnectionFactory.getConnection();
+        System.out.println(categoria.getNome());
+        System.out.println(categoria.getDescricao());
 
-            System.out.println("Conectado ao Oracle com sucesso!");
+        CategoriaDao dao = new CategoriaDao();
 
-            conn.close();
+        dao.salvar(categoria);*/
 
-        } catch (Exception e) {
+        CategoriaDao dao = new CategoriaDao();
 
-            System.out.println("Erro ao conectar:");
-            e.printStackTrace();
-
+        for (Categoria categoria : dao.listar()) {
+            System.out.println(categoria);
         }
+
     }
 }
