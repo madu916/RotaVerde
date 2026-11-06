@@ -20,11 +20,21 @@ public class Main {
 
         dao.salvar(categoria);*/
 
-        CategoriaDao dao = new CategoriaDao();
+        /*CategoriaDao dao = new CategoriaDao();
 
         for (Categoria categoria : dao.listar()) {
             System.out.println(categoria);
-        }
+        }*/
+
+        Categoria categoria = new Categoria();
+        categoria.setId(1);
+        categoria.setNome("Categoria");
+        categoria.setDescricao("Lixo eletrônico e componentes");
+
+        CategoriaDao dao = new CategoriaDao();
+
+        dao.atualizar(categoria);
+
 
     }
 }

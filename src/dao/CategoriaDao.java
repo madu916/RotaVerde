@@ -54,4 +54,24 @@ public class CategoriaDao {
         }
         return categorias;
     }
+    public void atualizar(Categoria categoria){
+        String sql = "UPDATE CATEGORIA " +
+                "SET NOME = ?, DESCRICAO = ? " +
+                "WHERE ID = ?";
+        try (
+                Connection conn = ConnectionFactory.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql);
+
+                ) {
+
+            stmt.setString(1, categoria.getNome());
+            stmt.setString(2, categoria.getDescricao());
+            stmt.setInt(3, categoria.getId());
+
+            stmt.executeUpdate();
+
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
 }
