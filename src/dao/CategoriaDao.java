@@ -29,7 +29,6 @@ public class CategoriaDao {
             e.printStackTrace();
         }
     }
-
     public List<Categoria> listar(){
         List<Categoria> categorias = new ArrayList<>();
         String sql = "SELECT * FROM CATEGORIA";
@@ -74,4 +73,21 @@ public class CategoriaDao {
             e.printStackTrace();
         }
     }
+    public void excluir(int id){
+        String sql = "DELETE FROM CATEGORIA " +
+                "WHERE ID = ?";
+        try (
+                Connection conn = ConnectionFactory.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql);
+                ){
+            stmt.setInt(1, id);int linhasAfetadas = stmt.executeUpdate();
+
+            System.out.println("Linhas afetadas: " + linhasAfetadas);
+
+            stmt.executeUpdate();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
 }

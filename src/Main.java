@@ -26,15 +26,17 @@ public class Main {
             System.out.println(categoria);
         }*/
 
-        Categoria categoria = new Categoria();
+       /* Categoria categoria = new Categoria();
         categoria.setId(1);
         categoria.setNome("Categoria");
         categoria.setDescricao("Lixo eletrônico e componentes");
 
         CategoriaDao dao = new CategoriaDao();
 
-        dao.atualizar(categoria);
+        dao.atualizar(categoria);*/
 
+        /*CategoriaDao dao = new CategoriaDao();
 
+        dao.excluir(1);*/
     }
 }
