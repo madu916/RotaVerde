@@ -85,7 +85,6 @@ public class CategoriaDao {
 
             System.out.println("Linhas afetadas: " + linhasAfetadas);
 
-            stmt.executeUpdate();
         } catch (SQLException e){
             e.printStackTrace();
         }
