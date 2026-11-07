@@ -80,7 +80,8 @@ public class CategoriaDao {
                 Connection conn = ConnectionFactory.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql);
                 ){
-            stmt.setInt(1, id);int linhasAfetadas = stmt.executeUpdate();
+            stmt.setInt(1, id);
+            int linhasAfetadas = stmt.executeUpdate();
 
             System.out.println("Linhas afetadas: " + linhasAfetadas);
 
