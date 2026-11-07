@@ -2,7 +2,6 @@ package dao;
 
 import connection.ConnectionFactory;
 import model.MaterialPonto;
-import model.PontoColeta;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,29 +22,40 @@ public class MaterialPontoDao {
                 ){
             stmt.setInt(1, materialPonto.getMaterialId());
             stmt.setInt(2, materialPonto.getPontoId());
+
+            stmt.executeUpdate();
+
+            System.out.println("Relacionamento cadastrado com sucesso!");
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
     }
-    public List<PontoColeta> listar(MaterialPonto materialPonto) {
-        List<PontoColeta> pontoColetas = new ArrayList<>();
+    public List<MaterialPonto> listar() {
+
+        List<MaterialPonto> relacionamentos = new ArrayList<>();
+
         String sql = "SELECT * FROM MATERIAL_PONTO";
 
         try (
                 Connection conn = ConnectionFactory.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql);
                 ResultSet rs = stmt.executeQuery()
+
                 ){
             while (rs.next()){
-                MaterialPonto materialPontos = new MaterialPonto();
-                materialPontos.setMaterialId(rs.getInt("MATERIAL_ID"));
-                materialPontos.setPontoId(rs.getInt("PONTO_ID"));
+                MaterialPonto materialPonto = new MaterialPonto();
+
+                materialPonto.setMaterialId(rs.getInt("MATERIAL_ID"));
+                materialPonto.setPontoId(rs.getInt("PONTO_ID"));
+
+                relacionamentos.add(materialPonto);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return pontoColetas;
+        return relacionamentos;
     }
     public void excluir(int materialId, int pontoId) {
         String sql = "DELETE FROM MATERIAL_PONTO " +
