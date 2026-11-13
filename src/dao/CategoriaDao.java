@@ -1,5 +1,6 @@
 package dao;
 import connection.ConnectionFactory;
+import exception.ErroBancoException;
 import model.Categoria;
 
 import java.sql.Connection;
@@ -26,7 +27,7 @@ public class CategoriaDao {
             stmt.executeUpdate(); // Update para INSERT
 
         } catch (SQLException e){  //caso algo dê errado
-            e.printStackTrace();
+            throw new ErroBancoException("Erro ao salvar categorias", e);
         }
     }
     public List<Categoria> listar(){
@@ -49,7 +50,7 @@ public class CategoriaDao {
             }
 
         }   catch (SQLException e){
-            e.printStackTrace();
+            throw new ErroBancoException("Erro ao listar categorias", e);
         }
         return categorias;
     }
@@ -70,7 +71,7 @@ public class CategoriaDao {
             stmt.executeUpdate();
 
         } catch (SQLException e){
-            e.printStackTrace();
+            throw new ErroBancoException("Erro ao atualizar categorias", e);
         }
     }
     public void excluir(int id){
@@ -86,7 +87,7 @@ public class CategoriaDao {
             System.out.println("Linhas afetadas: " + linhasAfetadas);
 
         } catch (SQLException e){
-            e.printStackTrace();
+            throw new ErroBancoException("Erro ao excluir categorias", e);
         }
     }
 

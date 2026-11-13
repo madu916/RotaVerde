@@ -1,6 +1,7 @@
 package dao;
 
 import connection.ConnectionFactory;
+import exception.ErroBancoException;
 import model.MaterialPonto;
 
 import java.sql.Connection;
@@ -28,7 +29,7 @@ public class MaterialPontoDao {
             System.out.println("Relacionamento cadastrado com sucesso!");
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new ErroBancoException("Erro ao salvar MaterialPonto", e);
         }
 
     }
@@ -53,7 +54,7 @@ public class MaterialPontoDao {
                 relacionamentos.add(materialPonto);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new ErroBancoException("Erro ao listar MaterialPonto", e);
         }
         return relacionamentos;
     }
@@ -75,7 +76,7 @@ public class MaterialPontoDao {
 
             System.out.println("Linhas afetadas: " + linhasAfetadas);
         } catch (SQLException e){
-            e.printStackTrace();
+            throw new ErroBancoException("Erro ao excluir MaterialPonto", e);
         }
     }
 

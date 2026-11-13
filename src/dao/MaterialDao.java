@@ -1,6 +1,7 @@
 package dao;
 
 import connection.ConnectionFactory;
+import exception.ErroBancoException;
 import model.Material;
 
 import java.sql.Connection;
@@ -31,7 +32,7 @@ public class MaterialDao {
             System.out.println("Material cadastrado com sucesso!");
 
         } catch (SQLException e){
-            e.printStackTrace();
+            throw new ErroBancoException("Erro ao salvar materiais", e);
         }
     }
     public List<Material> listar() {
@@ -54,7 +55,7 @@ public class MaterialDao {
                 materiais.add(material);
             }
         } catch (SQLException e){
-            e.printStackTrace();
+            throw new ErroBancoException("Erro ao listar materiais", e);
         }
         return materiais;
     }
@@ -77,7 +78,7 @@ public class MaterialDao {
             System.out.println("Linhas afetadas: " + linhasAfetadas);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new ErroBancoException("Erro ao atualizar materiais", e);
         }
     }
     public void excluir(int id) {
@@ -95,7 +96,7 @@ public class MaterialDao {
             System.out.println("Linhas afetadas: " + linhasAfetadas);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new ErroBancoException("Erro ao excluir materiais", e);
         }
     }
 }

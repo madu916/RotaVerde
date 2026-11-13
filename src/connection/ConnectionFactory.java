@@ -1,20 +1,28 @@
 package connection;
+
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class ConnectionFactory {
-    private static final String URL =
-            "jdbc:oracle:thin:@//oracle.fiap.com.br:1521/orcl";
+    private static final Properties config = new Properties();
 
-    private static final String USER = "rm566546";
-    private static final String PASSWORD = "fiap26";
+    static {
+        try (FileInputStream in = new FileInputStream("config.properties")) {
+            config.load(in);
+        } catch (IOException e) {
+            throw new RuntimeException("Não foi possível ler o config.properties", e);
+        }
+    }
 
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(
-                URL,
-                USER,
-                PASSWORD
+                config.getProperty("db.url"),
+                config.getProperty("db.user"),
+                config.getProperty("db.password")
         );
     }
 }

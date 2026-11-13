@@ -1,6 +1,7 @@
 package dao;
 
 import connection.ConnectionFactory;
+import exception.ErroBancoException;
 import model.PontoColeta;
 
 import java.sql.Connection;
@@ -34,7 +35,7 @@ public class PontoColetaDao {
             System.out.println("Ponto de coleta cadastrado com sucesso!");
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new ErroBancoException("Erro ao salvar PontoColeta", e);
         }
     }
     public List<PontoColeta> listar() {
@@ -63,9 +64,64 @@ public class PontoColetaDao {
                 pontoColetas.add(pontoColeta);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new ErroBancoException("Erro ao listar PontoColeta", e);
         }
         return pontoColetas;
+
+    }
+    public List<PontoColeta> buscar(
+            String cidade,
+            String estado,
+            String material
+    ) {
+
+        List<PontoColeta> pontos = new ArrayList<>();
+
+        String sql =
+                "SELECT DISTINCT p.* " +
+                        "FROM PONTO_COLETA p " +
+                        "JOIN MATERIAL_PONTO mp ON mp.PONTO_ID = p.ID " +
+                        "JOIN MATERIAL m ON m.ID = mp.MATERIAL_ID " +
+                        "WHERE UPPER(p.CIDADE) = UPPER(?) " +
+                        "AND UPPER(p.ESTADO) = UPPER(?) " +
+                        "AND UPPER(m.NOME) = UPPER(?)";
+
+        try (
+                Connection conn = ConnectionFactory.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)
+        ) {
+
+            stmt.setString(1, cidade);
+            stmt.setString(2, estado);
+            stmt.setString(3, material);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+                PontoColeta ponto = new PontoColeta();
+
+                ponto.setId(rs.getInt("ID"));
+                ponto.setNome(rs.getString("NOME"));
+                ponto.setLogradouro(rs.getString("LOGRADOURO"));
+                ponto.setNumero(rs.getString("NUMERO"));
+                ponto.setBairro(rs.getString("BAIRRO"));
+                ponto.setCidade(rs.getString("CIDADE"));
+                ponto.setEstado(rs.getString("ESTADO"));
+                ponto.setCep(rs.getString("CEP"));
+                ponto.setTelefone(rs.getString("TELEFONE"));
+
+                pontos.add(ponto);
+            }
+
+        } catch (SQLException e) {
+            throw new ErroBancoException(
+                    "Erro ao buscar pontos de coleta",
+                    e
+            );
+        }
+
+        return pontos;
     }
     public void atualizar(PontoColeta pontoColeta) {
         String sql = "UPDATE PONTO_COLETA " +
@@ -97,7 +153,7 @@ public class PontoColetaDao {
             System.out.println("Linhas afetadas: " + linhasAfetadas);
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new ErroBancoException("Erro ao atualizar PontoColeta", e);
         }
     }
     public void excluir(int id) {
@@ -113,7 +169,7 @@ public class PontoColetaDao {
             System.out.println("Linhas afetadas: " + linhasAfetadas);
 
     } catch (SQLException e) {
-            e.printStackTrace();
+            throw new ErroBancoException("Erro ao excluir PontoColeta", e);
         }
     }
 }
