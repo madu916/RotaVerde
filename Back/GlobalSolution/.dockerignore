@@ -1,0 +1,9 @@
+﻿.git
+.idea
+target
+out
+*.iml
+config.properties
+.env
+.env.*
+node_modules
