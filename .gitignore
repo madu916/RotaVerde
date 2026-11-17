@@ -1,0 +1,22 @@
+﻿# Java
+**/target/
+**/out/
+**/*.class
+**/.idea/
+**/*.iml
+
+# Node.js
+**/node_modules/
+**/build/
+**/dist/
+
+# Credenciais e variáveis de ambiente
+**/config.properties
+**/.env
+**/.env.*
+!**/.env.example
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+desktop.ini
